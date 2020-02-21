@@ -1,0 +1,15 @@
+{
+  "name": "amazoncrawler",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "debug": "~2.6.9",
+    "http-errors": "~1.6.3",
+    "nodemon": "^2.0.2"
+  }
+}
