@@ -26,7 +26,7 @@ function cheerioHandler(html){
             next: hasNextPage};
 }
         
-function recursiveCrawling(pageNum = 20, arrResults = []) {
+function recursiveCrawling(pageNum = 1, arrResults = []) {
     return axios.get(basicUrl, {
         params: {k: 'laptop', page: pageNum},
         headers: {'X-Requested-With': 'XMLHttpRequest'}
@@ -35,7 +35,13 @@ function recursiveCrawling(pageNum = 20, arrResults = []) {
             return response.data;
         })
         .then(data => {
-            console.log(cheerioHandler(data));
+            console.log(pageNum); //delete in final
+            let processedInfo = cheerioHandler(data);
+
+            if (processedInfo.links) arrResults = arrResults.concat(processedInfo.links);
+            if (processedInfo.next) return recursiveCrawling(pageNum+1, arrResults);
+
+            return arrResults;
         })
         .catch(err => {
            console.error(err);
@@ -43,4 +49,8 @@ function recursiveCrawling(pageNum = 20, arrResults = []) {
         });
 }
 
-recursiveCrawling();
+recursiveCrawling()
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => console.log(err));
