@@ -1,7 +1,9 @@
 const cheerio = require('cheerio');
 
+const basicUrl = 'https://www.amazon.com/s';
+
 //we use this function to get links of product
-function getLinksCheerio(html){
+function getLinksCheerio(html,){
     let linksOfProducts = [];
 
     const $ = cheerio.load(html);
@@ -26,7 +28,9 @@ function getLinksCheerio(html){
 
 //we use 'getProductDataCheerio' to get info from product page
 function getProductDataCheerio(html) {
+    const $ = cheerio.load(html);
 
+    return $('#centerCol #title').text().trim();
 }
 
 module.exports = {

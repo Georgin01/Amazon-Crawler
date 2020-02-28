@@ -1,10 +1,11 @@
 const axios = require('axios');
 
-import {getLinksCheerio, getProductDataCheerio} from "./cheerioUtil";
+const {getLinksCheerio, getProductDataCheerio} = require ('./cheerioUtil');
 
 const basicUrl = 'https://www.amazon.com/s';
 
-function recursiveCrawling(pageNum = 1, arrResults = []) {
+//Getting array of product links
+function recursiveLinkCrawling(pageNum = 1, arrResults = []) {
     return axios.get(basicUrl, {
         params: {k: 'laptop', page: pageNum},
         headers: {'X-Requested-With': 'XMLHttpRequest'}
@@ -17,7 +18,7 @@ function recursiveCrawling(pageNum = 1, arrResults = []) {
             let processedInfo = getLinksCheerio(data);
 
             if (processedInfo.links) arrResults = arrResults.concat(processedInfo.links);
-            if (processedInfo.next) return recursiveCrawling(pageNum+1, arrResults);
+            if (processedInfo.next) return recursiveLinkCrawling(pageNum+1, arrResults);
 
             return arrResults;
         })
@@ -27,8 +28,21 @@ function recursiveCrawling(pageNum = 1, arrResults = []) {
         });
 }
 
-recursiveCrawling()
+function getProductData(link){
+    return axios.get(link)
+        .then(response => {
+            return response.data;
+        })
+        .then(data => {
+            console.log(getProductDataCheerio(data));
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+recursiveLinkCrawling()
     .then(data => {
-        console.log(data);
+        return getProductData(data[0]);
     })
     .catch(err => console.log(err));
