@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 
-const basicUrl = 'https://www.amazon.com/s';
+const basicUrl = 'https://www.amazon.com';
 
 //we use this function to get links of product
 module.exports.getLinksCheerio = function getLinksCheerio(html,){
@@ -13,7 +13,7 @@ module.exports.getLinksCheerio = function getLinksCheerio(html,){
 
         //Filtering an advertising links and concat with basic url
         if (link && !link.match(/advertising/g)){
-            link = basicUrl.replace('/s', link);
+            link = basicUrl + link;
             linksOfProducts.push(link);
         }
     });
