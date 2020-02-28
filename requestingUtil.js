@@ -18,9 +18,9 @@ module.exports.recursiveLinkCrawling = function recursiveLinkCrawling(pageNum = 
             let processedInfo = getLinksCheerio(data);
 
             if (processedInfo.links) arrResults = arrResults.concat(processedInfo.links);
-            if (processedInfo.next) //return recursiveLinkCrawling(pageNum+1, arrResults);
+            if (processedInfo.next) return recursiveLinkCrawling(pageNum+1, arrResults);
 
-                return arrResults;
+            return arrResults;
         })
         .catch(err => {
             console.error(err);
@@ -36,7 +36,7 @@ module.exports.getProductData = function getProductData(link){
         })
         .then(data => {
             //parsing data with cheerio
-            console.log(getProductDataCheerio(data));
+            return getProductDataCheerio(data);
         })
         .catch(err => {
             console.log(err);
