@@ -30,7 +30,20 @@ function getLinksCheerio(html,){
 function getProductDataCheerio(html) {
     const $ = cheerio.load(html);
 
-    return $('#centerCol #title').text().trim();
+    let result = {};
+
+    let techDetailsBase = $('#productDetails_feature_div .a-expander-container:nth-child(2) table tr');
+
+    result.title = $('#centerCol #title span').text().trim();
+    result.rating = $('.centerColAlign .a-icon-star span').text();
+    result.price = $('#price #priceblock_ourprice_row #priceblock_ourprice').text();
+
+    $(techDetailsBase).each((i, elem) => {
+        let key = $(elem).find('th').text().trim();
+        result[key] = $(elem).find('td').text().trim();
+    });
+
+    return result;
 }
 
 module.exports = {

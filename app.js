@@ -18,7 +18,7 @@ function recursiveLinkCrawling(pageNum = 1, arrResults = []) {
             let processedInfo = getLinksCheerio(data);
 
             if (processedInfo.links) arrResults = arrResults.concat(processedInfo.links);
-            if (processedInfo.next) return recursiveLinkCrawling(pageNum+1, arrResults);
+            if (processedInfo.next) //return recursiveLinkCrawling(pageNum+1, arrResults);
 
             return arrResults;
         })
