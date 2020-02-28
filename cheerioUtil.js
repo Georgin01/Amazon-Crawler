@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const basicUrl = 'https://www.amazon.com/s';
 
 //we use this function to get links of product
-function getLinksCheerio(html,){
+module.exports.getLinksCheerio = function getLinksCheerio(html,){
     let linksOfProducts = [];
 
     const $ = cheerio.load(html);
@@ -24,17 +24,17 @@ function getLinksCheerio(html,){
 
     return {links: linksOfProducts,
         next: hasNextPage};
-}
+};
 
 //we use 'getProductDataCheerio' to get info from product page
-function getProductDataCheerio(html) {
+module.exports.getProductDataCheerio = function getProductDataCheerio(html) {
     const $ = cheerio.load(html);
 
     let result = {};
 
     let techDetailsBase = $('#productDetails_feature_div .a-expander-container:nth-child(2) table tr');
 
-    result.title = $('#centerCol #title span').text().trim();
+    result.title = $('#centerCol #title_feature_div #title span').text().trim();
     result.rating = $('.centerColAlign .a-icon-star span').text();
     result.price = $('#price #priceblock_ourprice_row #priceblock_ourprice').text();
 
@@ -44,9 +44,4 @@ function getProductDataCheerio(html) {
     });
 
     return result;
-}
-
-module.exports = {
-    getLinksCheerio,
-    getProductDataCheerio
 };

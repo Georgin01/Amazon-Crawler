@@ -28,12 +28,14 @@ function recursiveLinkCrawling(pageNum = 1, arrResults = []) {
         });
 }
 
+//function for send a GET request to product link
 function getProductData(link){
     return axios.get(link)
         .then(response => {
             return response.data;
         })
         .then(data => {
+            //parsing data with cheerio
             console.log(getProductDataCheerio(data));
         })
         .catch(err => {
