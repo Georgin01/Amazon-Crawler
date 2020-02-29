@@ -30,3 +30,17 @@ async function crawler() {
 }
 
 crawler().then(data => console.log(data));
+
+//The code below works without using a queue
+//
+//function crawler(){
+//     return recursiveLinkCrawling()
+//         .then(links => {
+//             let promises = links.map(link => getProductData(link));
+//
+//             return Promise.all(promises);
+//         })
+//         .catch(err => console.log(err));
+// }
+//
+// crawler().then(data => console.log(data));
